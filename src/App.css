@@ -1,38 +1,174 @@
-.App {
-  text-align: center;
+.container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  width: 1440px;
+  height: 941px;
+  /* left: 0px;
+  top: 83px; */
+
+  background: #839695;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.container_post {
+  /* position: absolute; */
   display: flex;
   flex-direction: column;
+  /* justify-content: space-evenly; */
+  width: 420px;
+  height: 450px;
+  margin: 20px 5px;
+  cursor: pointer;
+  /* left: 0px;
+  top: 83px; */
+
+  /* background-color: #969283; */
+}
+
+.post_image {
+  display: flex;
+  justify-content: center;
+  width: 420px;
+  height: 299px;
+}
+
+.post_image>img {
+  height: 100%;
+  width: 100%;
+
+
+}
+
+.post_title {
+  background: #112B3E;
+  height: 80px;
+  font-family: 'Roboto Slab', 'sans-serif';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 32px;
+  text-align: center;
+  overflow: hidden;
+  /* Скрытие контента, выходящего за границы контейнера */
+  /* white-space: nowrap; */
+  /* Предотвращение переноса текста на новую строку */
+  text-overflow: ellipsis;
+  /* Обрезание текста, выходящего за границы, с добавлением многоточия */
+  color: #FFFFFF;
+  padding: 1em;
+}
+
+.header {
+  display: flex;
+  height: 83px;
+  width: 1440px;
+  background-color: #112B3E;
+  flex-direction: row;
+  align-content: center;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+}
+
+.header-logo {
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+  cursor: pointer;
+  margin-left: 30px;
+}
+
+.header-site-name {
+  display: flex;
+  font-family: 'Roboto Slab';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 36px;
+  line-height: 47px;
+  text-transform: uppercase;
+  color: #FFFFFF;
+  /* border: 1px solid #000000; */
+}
+
+.header-dot-com {
+  display: flex;
+  font-family: 'Roboto Slab';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 36px;
+  line-height: 47px;
+  text-transform: lowercase;
+  color: #FFFFFF;
+  /* border: 1px solid #000000; */
+}
+
+/* post page */
+
+
+.page_post {
+  display: flex;
+  flex-direction: column;
+  width: 1440px;
+  background: #839695;
+  align-items: center;
+  align-content: center;
+  /* justify-content: center; */
+  /* flex-wrap: nowrap; */
+}
+
+.post-page_title {
+  font-family: 'Roboto Slab';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 36px;
+  line-height: 47px;
+  text-align: center;
+
+  color: #FFFFFF;
+
+}
+
+.post-page_img {
+  display: flex;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
 }
 
-.App-link {
-  color: #61dafb;
+.post-page_img img {
+
+  width: 1198px;
+  /* height: 448px; */
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.post-page_description {
+  font-family: 'Roboto Slab';
+  width: 1198px;
+
+  font-style: normal;
+  font-weight: 500;
+  font-size: 17px;
+  line-height: 22px;
+  margin: 20px 5px;
+  color: #000000;
+}
+
+.post-expert_comment {
+  width: 1198px;
+  padding: 10px 0 0px 15px;
+  height: 262px;
+  margin: 0px 0px 80px 0px;
+  background: #FFFFFF;
+  display: flex;
+  flex-direction: column;
+}
+
+.post-page_comment {
+  font-family: 'Roboto Slab';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 26px;
+
+  color: #000000;
+
 }
