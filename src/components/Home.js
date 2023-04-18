@@ -1,41 +1,28 @@
-import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom'
-// import { getData } from '../Api/GetData'
+import React, { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import Cart from '../components/Cart'
+import { fetchData, showCartPost } from '../reducers/cartSlice'
+
 
 export const Home = () => {
-    const navigate = useNavigate()
-    const [data, setData] = useState([]);
+    const { cartItems } = useSelector((store) => store.cart)
+    const dispatch = useDispatch()
+
 
     useEffect(() => {
-        fetch(`http://localhost:3001/posts`)
-            .then(res => res.json())
-            .then(data => setData(data))
-    }, []);
+        dispatch(fetchData())
+        dispatch(showCartPost())
+    }, [dispatch])
 
-    const getPosts = data.slice(0, 6);
-
-    const handlePostClick = (postId) => {
-        // console.log("postId", postId)
-        // Выполняем переход на страницу Post с передачей ID поста в параметрах
-        navigate(`/post/${postId}`, { replace: true });
-    };
-
+    const showPosts = cartItems.map(post => <Cart {...post} key={post.id} />)
     return (
-        <div className="container">
-            {getPosts.map((items) => {
-                return (
-                    <div
-                        className="container_post"
-                        key={items.id}
-                        onClick={() => handlePostClick(items.id)}
-                    >
-                        <div className="post_image">
-                            <img src={items.imageUrl} alt="post_img" />
-                        </div>
-                        <div className="post_title">{items.title}</div>
-                    </div>
-                )
-            })}
-        </div>
+        <>
+            <div className="container">
+
+
+                {showPosts}
+
+            </div >
+        </>
     )
 }

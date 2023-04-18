@@ -1,34 +1,34 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
+import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 
 export const Post = () => {
+    let curentPost = [];
     const { postId } = useParams();
-
-    const [post, setPost] = useState({});
-
-    useEffect(() => {
-        if (postId) {
-            fetch(`http://localhost:3001/posts/${postId}`)
-                .then(res => res.json())
-                .then(data => setPost(data))
+    const { cartItems } = useSelector((store) => store.cart)
+    for (let i = 0; i < cartItems.length; i++) {
+        if (postId === cartItems[i].id) {
+            curentPost = cartItems[i];
         }
-    }, [postId]);
-    console.log("p", post)
+    }
 
     return (
         <>
-            <div className='page_post'>
-                <p className='post-page_title'>{post.title}</p>
-                <div className='post-page_img'>
+            {cartItems && (
+                <div className='page_post'>
+                    <p className='post-page_title'>{curentPost.title}</p>
+                    <div className='post-page_img'>
 
-                    <img src={post.imageUrl} alt="imageUrl" />
+                        <img src={curentPost.imageUrl} alt="imageUrl" />
+                    </div>
+                    <div className='post-page_description'>{curentPost.description}</div>
+                    <div className='post-expert_comment'>
+                        <h3 className='title-expertComment'>Expert comment</h3>
+                        <div className='post-page_comment'>{curentPost.expertComment}</div>
+                    </div>
                 </div>
-                <div className='post-page_description'>{post.description}</div>
-                <div className='post-expert_comment'>
-                    <h3 className='title-expertComment'>Expert comment</h3>
-                    <div className='post-page_comment'>{post.expertComment}</div>
-                </div>
-            </div>
+            )}
+
         </>
     );
 };
