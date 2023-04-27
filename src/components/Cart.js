@@ -1,4 +1,7 @@
 import { useNavigate } from 'react-router-dom'
+import React from 'react';
+
+
 
 const Cart = ({ id, imageUrl, title }) => {
     const navigate = useNavigate()
@@ -6,6 +9,7 @@ const Cart = ({ id, imageUrl, title }) => {
 
         navigate(`/post/${postId}`, { replace: true });
     };
+
     return (
         <>
             <div
