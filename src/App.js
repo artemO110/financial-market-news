@@ -4,7 +4,6 @@ import { Header } from './components/Header';
 import { Home } from './components/Home';
 import { Post } from './components/Post';
 
-import './App.css';
 
 export const App = () => {
   return (

@@ -1,63 +1,61 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import Cart from '../components/Cart';
-import { fetchData, showCartPost } from '../reducers/cartSlice';
+import { setCartItems } from '../reducers/cartSlice';
 import { db } from "../firebase";
-
 import {
+    query,
     collection,
-    addDoc,
-    setDoc,
-    doc,
+    onSnapshot,
 } from 'firebase/firestore'
+
+const style = {
+    container: 'flex flex-wrap justify-around bg-myBg w-full'
+}
 
 
 export const Home = () => {
-    const { cartItems } = useSelector((store) => store.cart);
+    const cartItems = useSelector((store) => store.cart.cartItems);
     const dispatch = useDispatch();
-
+    const [cartNews, setCartNews] = useState([]);
 
     useEffect(() => {
-        dispatch(fetchData())
-        dispatch(showCartPost())
-    }, [dispatch])
+        const getCartItemsFromFirestore = async () => {
+            try {
+                const q = query(collection(db, 'posts'));
+                const unsubscribe = onSnapshot(q, (querySnapshot) => {
+                    let cartItemsArr = [];
+                    querySnapshot.forEach((doc) => {
+                        cartItemsArr.push({ ...doc.data(), id: doc.id });
+                    });
+                    dispatch(setCartItems(cartItemsArr));
+                    setCartNews(cartItemsArr);
+                });
 
+                return () => unsubscribe();
+            } catch (error) {
+                console.error('Ошибка при получении списка товаров из Firestore:', error);
+            }
+        };
 
-
-    const showPosts = cartItems.map(post => <Cart {...post} key={post.id} />)
-
-    const hendleAddDoc = () => {
-
-        if (!collection.exist) {
-            cartItems.forEach(async (postData) => {
-                try {
-                    const docRef = await addDoc(collection(db, "posts"), postData);
-                    console.log("Document written with ID: ", docRef.id);
-                } catch (e) {
-                    console.error("Error adding document: ", e);
-                }
-            });
+        if (cartItems.length === 0) {
+            getCartItemsFromFirestore();
+        } else {
+            setCartNews(cartItems);
         }
-        else {
-            console.error("Hi, bro", cartItems);
-        }
-    }
+    }, [cartItems, dispatch]);
 
-
-
-
-
-
+    const showPosts = cartNews.map(post => <Cart {...post} key={post.id} />);
 
     return (
         <>
-            <div className="container">
-
-
-                {showPosts}
-                <button onClick={() => { hendleAddDoc() }}>hi</button>
-
-            </div >
+            <div className={style.container}>
+                {cartNews.length > 0 ? (
+                    showPosts
+                ) : (
+                    <p>Loading...</p>
+                )}
+            </div>
         </>
-    )
-}
+    );
+};
